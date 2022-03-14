@@ -16,15 +16,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="SkeletonPiPL.rc">
+    <ResourceCompile Include="DeKafkaAEPiPL.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Skeleton.h">
+    <ClInclude Include="..\DeKafkaAE.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Skeleton_Strings.h">
+    <ClInclude Include="..\DeKafkaAE_Strings.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Headers\A.h">
@@ -92,11 +92,11 @@
     <ClCompile Include="..\..\..\Util\MissingSuiteError.cpp">
       <Filter>Supporting code</Filter>
     </ClCompile>
-    <ClCompile Include="..\Skeleton.cpp" />
-    <ClCompile Include="..\Skeleton_Strings.cpp" />
+    <ClCompile Include="..\DeKafkaAE.cpp" />
+    <ClCompile Include="..\DeKafkaAE_Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\SkeletonPiPL.r">
+    <CustomBuild Include="..\DeKafkaAEPiPL.r">
       <Filter>Resources</Filter>
     </CustomBuild>
   </ItemGroup>

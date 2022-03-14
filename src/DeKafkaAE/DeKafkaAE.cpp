@@ -1,47 +1,4 @@
-/*******************************************************************/
-/*                                                                 */
-/*                      ADOBE CONFIDENTIAL                         */
-/*                   _ _ _ _ _ _ _ _ _ _ _ _ _                     */
-/*                                                                 */
-/* Copyright 2007 Adobe Systems Incorporated                       */
-/* All Rights Reserved.                                            */
-/*                                                                 */
-/* NOTICE:  All information contained herein is, and remains the   */
-/* property of Adobe Systems Incorporated and its suppliers, if    */
-/* any.  The intellectual and technical concepts contained         */
-/* herein are proprietary to Adobe Systems Incorporated and its    */
-/* suppliers and may be covered by U.S. and Foreign Patents,       */
-/* patents in process, and are protected by trade secret or        */
-/* copyright law.  Dissemination of this information or            */
-/* reproduction of this material is strictly forbidden unless      */
-/* prior written permission is obtained from Adobe Systems         */
-/* Incorporated.                                                   */
-/*                                                                 */
-/*******************************************************************/
-
-/*	Skeleton.cpp	
-
-	This is a compiling husk of a project. Fill it in with interesting
-	pixel processing code.
-	
-	Revision History
-
-	Version		Change													Engineer	Date
-	=======		======													========	======
-	1.0			(seemed like a good idea at the time)					bbb			6/1/2002
-
-	1.0			Okay, I'm leaving the version at 1.0,					bbb			2/15/2006
-				for obvious reasons; you're going to 
-				copy these files directly! This is the
-				first XCode version, though.
-
-	1.0			Let's simplify this barebones sample					zal			11/11/2010
-
-	1.0			Added new entry point									zal			9/18/2017
-
-*/
-
-#include "Skeleton.h"
+#include "DeKafkaAE.h"
 
 static PF_Err 
 About (	
@@ -226,9 +183,9 @@ PF_Err PluginDataEntryFunction(
 	result = PF_REGISTER_EFFECT(
 		inPtr,
 		inPluginDataCallBackPtr,
-		"Skeleton", // Name
-		"ADBE Skeleton", // Match Name
-		"Sample Plug-ins", // Category
+		STR(StrID_Name), // Name
+		STR(StrID_Name), // Match Name
+		STR(StrID_Category), // Category
 		AE_RESERVED_INFO); // Reserved Info
 
 	return result;
