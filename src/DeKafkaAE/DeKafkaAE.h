@@ -11,9 +11,6 @@ typedef short int			int16;
 #define PF_TABLE_BITS	12
 #define PF_TABLE_SZ_16	4096
 
-#define PF_DEEP_COLOR_AWARE 1	// make sure we get 16bpc pixels; 
-								// AE_Effect.h checks for this.
-
 #include "AEConfig.h"
 
 #ifdef AE_OS_WIN
@@ -45,26 +42,43 @@ typedef short int			int16;
 
 /* Parameter defaults */
 
-#define	SKELETON_GAIN_MIN		0
-#define	SKELETON_GAIN_MAX		100
-#define	SKELETON_GAIN_DFLT		10
+#define	DEKAFKA_LEFT_MIN		0
+#define	DEKAFKA_LEFT_MAX		1920
+#define	DEKAFKA_LEFT_DFLT		1578
+
+#define	DEKAFKA_TOP_MIN			0
+#define	DEKAFKA_TOP_MAX			1080
+#define	DEKAFKA_TOP_DFLT		28
+
+#define	DEKAFKA_WIDTH_MIN		0
+#define	DEKAFKA_WIDTH_MAX		1920
+#define	DEKAFKA_WIDTH_DFLT		194
+
+#define	DEKAFKA_HEIGHT_MIN		0
+#define	DEKAFKA_HEIGHT_MAX		1080
+#define	DEKAFKA_HEIGHT_DFLT		32
+
+#define	DEKAFKA_AMOUNT_MIN		0
+#define	DEKAFKA_AMOUNT_MAX		255
+#define	DEKAFKA_AMOUNT_DFLT		255
 
 enum {
-	SKELETON_INPUT = 0,
-	SKELETON_GAIN,
-	SKELETON_COLOR,
-	SKELETON_NUM_PARAMS
+	DEKAFKA_INPUT = 0,
+	DEKAFKA_LEFT,
+	DEKAFKA_TOP,
+	DEKAFKA_WIDTH,
+	DEKAFKA_HEIGHT,
+	DEKAFKA_AMOUNT,
+	DEKAFKA_NUM_PARAMS
 };
 
 enum {
-	GAIN_DISK_ID = 1,
-	COLOR_DISK_ID,
+	LEFT_DISK_ID = 1,
+	TOP_DISK_ID,
+	WIDTH_DISK_ID,
+	HEIGHT_DISK_ID,
+	AMOUNT_DISK_ID,
 };
-
-typedef struct GainInfo{
-	PF_FpLong	gainF;
-} GainInfo, *GainInfoP, **GainInfoH;
-
 
 extern "C" {
 

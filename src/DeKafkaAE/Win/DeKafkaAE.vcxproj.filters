@@ -84,6 +84,9 @@
     <ClInclude Include="..\..\..\Headers\AE_PluginData.h">
       <Filter>Headers\AE</Filter>
     </ClInclude>
+    <ClInclude Include="..\DeKafkaMask.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Util\AEGP_SuiteHandler.cpp">
@@ -94,6 +97,7 @@
     </ClCompile>
     <ClCompile Include="..\DeKafkaAE.cpp" />
     <ClCompile Include="..\DeKafkaAE_Strings.cpp" />
+    <ClCompile Include="..\DeKafkaMask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\DeKafkaAEPiPL.r">

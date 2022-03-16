@@ -12,8 +12,11 @@ TableString		g_strs[StrID_NUMTYPES] = {
 	StrID_Name,						"DeKafka",
 	StrID_Description,				"A port of the DeKafka avisynth function, but as an Adobe After Effects plug-in.",
 	StrID_Category,					"DeKafka",
-	StrID_Gain_Param_Name,			"Gain",
-	StrID_Color_Param_Name,			"Color",
+	StrID_Left_Param_Name,			"Left",
+	StrID_Top_Param_Name,			"Top",
+	StrID_Width_Param_Name,			"Width",
+	StrID_Height_Param_Name,		"Height",
+	StrID_Amount_Param_Name,		"Amount"
 };
 
 

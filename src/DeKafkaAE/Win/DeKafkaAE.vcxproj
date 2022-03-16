@@ -70,7 +70,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IgnoreImportLibrary>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(AE_PLUGIN_BUILD_DIR)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(AE_PLUGIN_BUILD_DIR)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
@@ -93,6 +93,9 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.aex</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.aex</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.aex</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -160,7 +163,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\Headers;..\..\..\Headers\SP;..\..\..\Headers\Win;..\..\..\Resources;..\..\..\Util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\ImageMagick-7.1.0-Q8\include;..\..\..\Headers;..\..\..\Headers\SP;..\..\..\Headers\Win;..\..\..\Resources;..\..\..\Util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -174,7 +177,7 @@
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
@@ -188,8 +191,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <GenerateDebugInformation>
-      </GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>
       </SubSystem>
@@ -198,6 +200,8 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(IntDir)/$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>CORE_RL_Magick++_.lib;CORE_RL_MagickCore_.lib;CORE_RL_MagickWand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\ImageMagick-7.1.0-Q8\lib</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <OutputFile>$(IntDir)$(TargetName).bsc</OutputFile>
@@ -365,12 +369,14 @@ cl /D "MSWindows" /EP $(IntDir)%(Filename).rrc &gt;               "$(ProjectDir)
     <ClInclude Include="..\..\..\Util\Param_Utils.h" />
     <ClInclude Include="..\..\..\Headers\PF_Masks.h" />
     <ClInclude Include="..\..\..\Util\String_Utils.h" />
+    <ClInclude Include="..\DeKafkaMask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Util\AEGP_SuiteHandler.cpp" />
     <ClCompile Include="..\..\..\Util\MissingSuiteError.cpp" />
     <ClCompile Include="..\DeKafkaAE.cpp" />
     <ClCompile Include="..\DeKafkaAE_Strings.cpp" />
+    <ClCompile Include="..\DeKafkaMask.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

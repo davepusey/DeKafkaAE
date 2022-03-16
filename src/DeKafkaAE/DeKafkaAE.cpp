@@ -1,4 +1,5 @@
 #include "DeKafkaAE.h"
+#include "DeKafkaMask.h"
 
 static PF_Err 
 About (	
@@ -31,8 +32,6 @@ GlobalSetup (
 										STAGE_VERSION, 
 										BUILD_VERSION);
 
-	out_data->out_flags =  PF_OutFlag_DEEP_COLOR_AWARE;	// just 16bpc, not 32bpc
-	
 	return PF_Err_NONE;
 }
 
@@ -48,82 +47,70 @@ ParamsSetup (
 
 	AEFX_CLR_STRUCT(def);
 
-	PF_ADD_FLOAT_SLIDERX(	STR(StrID_Gain_Param_Name), 
-							SKELETON_GAIN_MIN, 
-							SKELETON_GAIN_MAX, 
-							SKELETON_GAIN_MIN, 
-							SKELETON_GAIN_MAX, 
-							SKELETON_GAIN_DFLT,
-							PF_Precision_HUNDREDTHS,
-							0,
-							0,
-							GAIN_DISK_ID);
+	PF_ADD_FLOAT_SLIDERX(STR(StrID_Left_Param_Name),
+		DEKAFKA_LEFT_MIN,
+		DEKAFKA_LEFT_MAX,
+		DEKAFKA_LEFT_MIN,
+		DEKAFKA_LEFT_MAX,
+		DEKAFKA_LEFT_DFLT,
+		PF_Precision_INTEGER,
+		0,
+		0,
+		LEFT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 
-	PF_ADD_COLOR(	STR(StrID_Color_Param_Name), 
-					PF_HALF_CHAN8,
-					PF_MAX_CHAN8,
-					PF_MAX_CHAN8,
-					COLOR_DISK_ID);
-	
-	out_data->num_params = SKELETON_NUM_PARAMS;
+	PF_ADD_FLOAT_SLIDERX(STR(StrID_Top_Param_Name),
+		DEKAFKA_TOP_MIN,
+		DEKAFKA_TOP_MAX,
+		DEKAFKA_TOP_MIN,
+		DEKAFKA_TOP_MAX,
+		DEKAFKA_TOP_DFLT,
+		PF_Precision_INTEGER,
+		0,
+		0,
+		TOP_DISK_ID);
 
-	return err;
-}
+	AEFX_CLR_STRUCT(def);
 
-static PF_Err
-MySimpleGainFunc16 (
-	void		*refcon, 
-	A_long		xL, 
-	A_long		yL, 
-	PF_Pixel16	*inP, 
-	PF_Pixel16	*outP)
-{
-	PF_Err		err = PF_Err_NONE;
+	PF_ADD_FLOAT_SLIDERX(STR(StrID_Width_Param_Name),
+		DEKAFKA_WIDTH_MIN,
+		DEKAFKA_WIDTH_MAX,
+		DEKAFKA_WIDTH_MIN,
+		DEKAFKA_WIDTH_MAX,
+		DEKAFKA_WIDTH_DFLT,
+		PF_Precision_INTEGER,
+		0,
+		0,
+		WIDTH_DISK_ID);
 
-	GainInfo	*giP	= reinterpret_cast<GainInfo*>(refcon);
-	PF_FpLong	tempF	= 0;
-					
-	if (giP){
-		tempF = giP->gainF * PF_MAX_CHAN16 / 100.0;
-		if (tempF > PF_MAX_CHAN16){
-			tempF = PF_MAX_CHAN16;
-		};
+	AEFX_CLR_STRUCT(def);
 
-		outP->alpha		=	inP->alpha;
-		outP->red		=	MIN((inP->red	+ (A_u_char) tempF), PF_MAX_CHAN16);
-		outP->green		=	MIN((inP->green	+ (A_u_char) tempF), PF_MAX_CHAN16);
-		outP->blue		=	MIN((inP->blue	+ (A_u_char) tempF), PF_MAX_CHAN16);
-	}
+	PF_ADD_FLOAT_SLIDERX(STR(StrID_Height_Param_Name),
+		DEKAFKA_HEIGHT_MIN,
+		DEKAFKA_HEIGHT_MAX,
+		DEKAFKA_HEIGHT_MIN,
+		DEKAFKA_HEIGHT_MAX,
+		DEKAFKA_HEIGHT_DFLT,
+		PF_Precision_INTEGER,
+		0,
+		0,
+		HEIGHT_DISK_ID);
 
-	return err;
-}
+	AEFX_CLR_STRUCT(def);
 
-static PF_Err
-MySimpleGainFunc8 (
-	void		*refcon, 
-	A_long		xL, 
-	A_long		yL, 
-	PF_Pixel8	*inP, 
-	PF_Pixel8	*outP)
-{
-	PF_Err		err = PF_Err_NONE;
+	PF_ADD_FLOAT_SLIDERX(STR(StrID_Amount_Param_Name),
+		DEKAFKA_AMOUNT_MIN,
+		DEKAFKA_AMOUNT_MAX,
+		DEKAFKA_AMOUNT_MIN,
+		DEKAFKA_AMOUNT_MAX,
+		DEKAFKA_AMOUNT_DFLT,
+		PF_Precision_INTEGER,
+		0,
+		0,
+		AMOUNT_DISK_ID);
 
-	GainInfo	*giP	= reinterpret_cast<GainInfo*>(refcon);
-	PF_FpLong	tempF	= 0;
-					
-	if (giP){
-		tempF = giP->gainF * PF_MAX_CHAN8 / 100.0;
-		if (tempF > PF_MAX_CHAN8){
-			tempF = PF_MAX_CHAN8;
-		};
-
-		outP->alpha		=	inP->alpha;
-		outP->red		=	MIN((inP->red	+ (A_u_char) tempF), PF_MAX_CHAN8);
-		outP->green		=	MIN((inP->green	+ (A_u_char) tempF), PF_MAX_CHAN8);
-		outP->blue		=	MIN((inP->blue	+ (A_u_char) tempF), PF_MAX_CHAN8);
-	}
+	out_data->num_params = DEKAFKA_NUM_PARAMS;
 
 	return err;
 }
@@ -139,32 +126,29 @@ Render (
 	AEGP_SuiteHandler	suites(in_data->pica_basicP);
 
 	/*	Put interesting code here. */
-	GainInfo			giP;
-	AEFX_CLR_STRUCT(giP);
-	A_long				linesL	= 0;
-
-	linesL 		= output->extent_hint.bottom - output->extent_hint.top;
-	giP.gainF 	= params[SKELETON_GAIN]->u.fs_d.value;
 	
-	if (PF_WORLD_IS_DEEP(output)){
-		ERR(suites.Iterate16Suite2()->iterate(	in_data,
-												0,								// progress base
-												linesL,							// progress final
-												&params[SKELETON_INPUT]->u.ld,	// src 
-												NULL,							// area - null for all pixels
-												(void*)&giP,					// refcon - your custom data pointer
-												MySimpleGainFunc16,				// pixel function pointer
-												output));
-	} else {
-		ERR(suites.Iterate8Suite2()->iterate(	in_data,
-												0,								// progress base
-												linesL,							// progress final
-												&params[SKELETON_INPUT]->u.ld,	// src 
-												NULL,							// area - null for all pixels
-												(void*)&giP,					// refcon - your custom data pointer
-												MySimpleGainFunc8,				// pixel function pointer
-												output));	
-	}
+	PF_FpLong x = params[DEKAFKA_LEFT]->u.fs_d.value;
+	PF_FpLong y = params[DEKAFKA_TOP]->u.fs_d.value;
+	PF_FpLong w = params[DEKAFKA_WIDTH]->u.fs_d.value;
+	PF_FpLong h = params[DEKAFKA_HEIGHT]->u.fs_d.value;
+	PF_FpLong amount = params[DEKAFKA_AMOUNT]->u.fs_d.value;
+
+	PF_Rect maskRect;
+	maskRect.left = A_long(x) - 2;
+	maskRect.top = A_long(y) - 2;
+	maskRect.right = A_long(x) + A_long(w) + 2;
+	maskRect.bottom = A_long(y) + A_long(h) + 2;
+
+	PF_EffectWorld maskWorld;
+	AEFX_CLR_STRUCT(maskWorld);
+	ERR(suites.WorldSuite1()->new_world(in_data->effect_ref, A_long(w) + 4, A_long(h) + 4, NULL, &maskWorld));
+
+	ERR(PF_COPY(&params[DEKAFKA_INPUT]->u.ld, &maskWorld, &maskRect, NULL));
+
+	ApplyMask(&maskWorld, x, y, w, h, amount);
+
+	ERR(PF_COPY(&params[DEKAFKA_INPUT]->u.ld, output, NULL, NULL));
+	ERR(PF_COPY(&maskWorld, output, NULL, &maskRect));
 
 	return err;
 }
