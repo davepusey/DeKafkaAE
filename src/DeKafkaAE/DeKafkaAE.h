@@ -28,6 +28,8 @@ typedef short int			int16;
 #include "AE_GeneralPlug.h"
 #include "AEFX_ChannelDepthTpl.h"
 #include "AEGP_SuiteHandler.h"
+#include "PrSDKAESupport.h"
+#include "AEFX_SuiteHelper.h"
 
 #include "DeKafkaAE_Strings.h"
 

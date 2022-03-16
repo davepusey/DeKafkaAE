@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommand>C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\AfterFX.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>C:\Program Files\Adobe\Adobe Premiere Pro 2022\Adobe Premiere Pro.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

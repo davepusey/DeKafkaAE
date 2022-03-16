@@ -32,6 +32,18 @@ GlobalSetup (
 										STAGE_VERSION, 
 										BUILD_VERSION);
 
+	// for Premiere Pro
+	if (in_data->appl_id == 'PrMr')
+	{
+		AEFX_SuiteScoper<PF_PixelFormatSuite1> pixelFormatSuite = AEFX_SuiteScoper<PF_PixelFormatSuite1>(in_data, kPFPixelFormatSuite, kPFPixelFormatSuiteVersion1, out_data);
+
+		// clear supported pixel formats
+		(*pixelFormatSuite->ClearSupportedPixelFormats)(in_data->effect_ref);
+
+		// add supported pixel formats
+		(*pixelFormatSuite->AddSupportedPixelFormat) (in_data->effect_ref, PrPixelFormat_ARGB_4444_8u);
+	}
+
 	return PF_Err_NONE;
 }
 
@@ -133,6 +145,13 @@ Render (
 	PF_FpLong h = params[DEKAFKA_HEIGHT]->u.fs_d.value;
 	PF_FpLong amount = params[DEKAFKA_AMOUNT]->u.fs_d.value;
 
+	// for Premiere Pro
+	if (in_data->appl_id == 'PrMr')
+	{
+		//y /= 2;
+		//h /= 2;
+	}
+
 	PF_Rect maskRect;
 	maskRect.left = A_long(x) - 2;
 	maskRect.top = A_long(y) - 2;
@@ -141,7 +160,7 @@ Render (
 
 	PF_EffectWorld maskWorld;
 	AEFX_CLR_STRUCT(maskWorld);
-	ERR(suites.WorldSuite1()->new_world(in_data->effect_ref, A_long(w) + 4, A_long(h) + 4, NULL, &maskWorld));
+	ERR(PF_NEW_WORLD(A_long(w) + 4, A_long(h) + 4, NULL, &maskWorld));
 
 	ERR(PF_COPY(&params[DEKAFKA_INPUT]->u.ld, &maskWorld, &maskRect, NULL));
 
