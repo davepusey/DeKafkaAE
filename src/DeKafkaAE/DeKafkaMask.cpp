@@ -14,6 +14,8 @@ void ApplyMask(PF_EffectWorld *world, PF_FpLong x, PF_FpLong y, PF_FpLong w, PF_
     ApplyMaskToImage(img, x, y, w, h, amount);
 
     ImageToEffectWorld(img, world);
+
+    delete img;
 }
 
 void EffectWorldToImage(PF_EffectWorld *world, Image *img)
