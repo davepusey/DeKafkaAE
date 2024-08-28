@@ -26,3 +26,7 @@ function dekafka(clip clip, int Xstart, int Ystart, int X, int Y, int Amount)
   return clip
 }
 ```
+
+## Output
+
+Output can be found as `DeKafkaAE.aex` in `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\davepusey`
